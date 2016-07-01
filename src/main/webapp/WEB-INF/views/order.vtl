@@ -1,0 +1,80 @@
+<div class="container bg-grayLighter">
+  <dl class="order-description horizontal padding20 no-margin-top text-accent">
+    <dt>Order ID</dt>
+    <dd>$order.getId()</dd>
+    <dt>Table</dt>
+    <dd>$order.getTable()</dd>
+    <dt>Seat</dt>
+    <dd>$order.getSeat()</dd>
+    <dt>Dish</dt>
+    <dd>$order.getDishName()</dd>
+    <dt>Order is Up</dt>
+    #if ($order.isUp())
+      <dd>Yes</dd>
+    #else
+      <dd>No</dd>
+    #end
+    <dt>Paid</dt>
+    #if ($order.checkPaid())
+      <dd>Paid</dd>
+    #else
+      <dd>Not Paid</dd>
+    #end
+  </dl>
+
+  #if ($order.getComments())
+    <h2 class="subleader padding100 no-padding-bottom no-padding-top">Comments: $order.getComments()</h2>
+  #end
+
+  <div class="tile-container padding100 no-padding-top">
+    <form action="/servers/orders/$order.getId()/pay" method="post">
+      <button type="submit" class="tile bg-emerald bg-active-lightGreen fg-white margin20 padding10">
+        <div class="tile-content iconic">
+          <span class="icon mif-dollar2"></span>
+        </div>
+        <span class="tile-label">Pay</span>
+      </button>
+    </form>
+
+    <form action="/servers/orders/$order.getId()/complete" method="post">
+      <button type="submit" class="tile bg-mauve bg-active-darkViolet fg-white margin20 padding10">
+        <div class="tile-content iconic">
+          <span class="icon mif-checkmark"></span>
+        </div>
+        <span class="tile-label">Close Order</span>
+      </button>
+    </form>
+
+    <form action="/servers/orders/active/remove" method="post">
+      <div class="input-contol">
+        <input type="hidden" name="order-remove" value="$order.getId()">
+        <button type="submit" class="tile bg-amber bg-active-yellow fg-white margin20 padding10">
+          <div class="tile-content iconic">
+            <span class="icon mif-cancel"></span>
+          </div>
+          <span class="tile-label">Cancel</span>
+        </button>
+      </div>
+    </form>
+
+    <form action="/servers/orders/active/restart" method="post">
+      <div class="input-contol">
+        <input type="hidden" name="order-restart" value="$order.getId()">
+        <button type="submit" class="tile bg-crimson bg-active-red fg-white margin20 padding10">
+          <div class="tile-content iconic">
+            <span class="icon mif-redo"></span>
+          </div>
+          <span class="tile-label">Re-Fire</span>
+        </button>
+      </div>
+    </form>
+
+    <a class="tile bg-grayLight bg-active-Steel fg-white margin20 padding10" href="/servers/orders/active">
+      <div class="tile-content iconic">
+        <span class="icon mif-arrow-left"></span>
+      </div>
+      <span class="tile-label">Back to Active Orders</span>
+    </a>
+
+  </div>
+</div>
